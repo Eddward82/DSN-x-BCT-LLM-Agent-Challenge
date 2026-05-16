@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────
+# TEST TASK A — Simulate a review
+# Run this in your terminal after starting the server:
+# curl -X POST http://localhost:8000/task-a/simulate-review \
+#   -H "Content-Type: application/json" \
+#   -d @tests/task_a_sample.json
+# ─────────────────────────────────────────────────────────────
+
+{
+  "user_persona": {
+    "user_id": "user_001",
+    "name": "Chidi",
+    "city": "Lagos",
+    "past_reviews": [
+      {
+        "business_name": "Mama Cass",
+        "category": "Nigerian Restaurant",
+        "rating": 4.0,
+        "review_text": "The jollof rice was on point but the service was slow. I go back sha because the food dey sweet."
+      },
+      {
+        "business_name": "Chicken Republic",
+        "category": "Fast Food",
+        "rating": 3.5,
+        "review_text": "Decent food but always plenty queue. The chips sometimes cold sef. They need to do better."
+      },
+      {
+        "business_name": "The Place",
+        "category": "Nigerian Restaurant",
+        "rating": 5.0,
+        "review_text": "This place is a vibe! Pepper soup and catfish were absolutely delicious. Will definitely return."
+      }
+    ]
+  },
+  "target_business": "Yellow Chilli",
+  "target_category": "Nigerian Fine Dining",
+  "target_description": "Upscale Nigerian restaurant known for pepper soup, grilled fish, and premium suya. Located in Victoria Island, Lagos."
+}

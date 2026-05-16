@@ -1,0 +1,72 @@
+# ─────────────────────────────────────────────────────────────
+# TEST TASK B — Get personalised recommendations
+# curl -X POST http://localhost:8000/task-b/recommend \
+#   -H "Content-Type: application/json" \
+#   -d @tests/task_b_sample.json
+# ─────────────────────────────────────────────────────────────
+
+{
+  "user_persona": {
+    "user_id": "user_001",
+    "name": "Chidi",
+    "city": "Lagos",
+    "past_reviews": [
+      {
+        "business_name": "Mama Cass",
+        "category": "Nigerian Restaurant",
+        "rating": 4.0,
+        "review_text": "The jollof rice was on point but the service was slow. I go back sha because the food dey sweet."
+      },
+      {
+        "business_name": "Chicken Republic",
+        "category": "Fast Food",
+        "rating": 3.5,
+        "review_text": "Decent food but always plenty queue. The chips sometimes cold sef. They need to do better."
+      },
+      {
+        "business_name": "The Place",
+        "category": "Nigerian Restaurant",
+        "rating": 5.0,
+        "review_text": "This place is a vibe! Pepper soup and catfish were absolutely delicious. Will definitely return."
+      }
+    ]
+  },
+  "context": "Looking for somewhere nice to eat on a Saturday evening with my wife",
+  "available_businesses": [
+    {
+      "name": "Nkoyo",
+      "category": "Nigerian Fine Dining",
+      "price_range": "high",
+      "avg_rating": 4.7,
+      "description": "Elegant restaurant in Lekki serving traditional Nigerian cuisine with a modern twist. Known for ofe onugbu and oha soup."
+    },
+    {
+      "name": "Domino's Pizza",
+      "category": "Fast Food / Pizza",
+      "price_range": "medium",
+      "avg_rating": 3.8,
+      "description": "Popular pizza chain with delivery. Pepperoni and BBQ chicken are bestsellers."
+    },
+    {
+      "name": "Bukka Hut",
+      "category": "Nigerian Casual Dining",
+      "price_range": "low",
+      "avg_rating": 4.2,
+      "description": "Authentic Nigerian canteen-style restaurant. Buffet of local dishes including egusi, efo riro, and assorted meats."
+    },
+    {
+      "name": "Hard Rock Cafe Lagos",
+      "category": "American / Bar & Grill",
+      "price_range": "high",
+      "avg_rating": 4.0,
+      "description": "International chain with burgers, ribs, cocktails, and live music on weekends."
+    },
+    {
+      "name": "Suya Joint Victoria Island",
+      "category": "Nigerian Street Food",
+      "price_range": "low",
+      "avg_rating": 4.5,
+      "description": "Famous roadside suya spot. Grilled beef, chicken, and ram suya served with onions and tomatoes."
+    }
+  ]
+}
