@@ -98,25 +98,29 @@ def build_persona(user_id, user_reviews, businesses, city="Philadelphia"):
 
 
 def get_candidate_businesses(businesses, n=5):
-    """Pick n random businesses to use as recommendation candidates."""
-    sample = random.sample(list(businesses.values()), min(n * 10, len(businesses)))
+    """Pick n food/restaurant businesses to use as recommendation candidates."""
+    food_keywords = ["restaurant", "food", "cafe", "bar", "grill", "diner", "pizza",
+                     "burger", "sushi", "bistro", "bakery", "coffee", "bbq", "steakhouse",
+                     "seafood", "sandwich", "breakfast", "brunch", "pub", "kitchen"]
+
+    food_businesses = [
+        b for b in businesses.values()
+        if b.get("name") and b.get("categories") and
+        any(kw in str(b.get("categories", "")).lower() for kw in food_keywords)
+    ]
+
+    sample = random.sample(food_businesses, min(n, len(food_businesses)))
     candidates = []
     for b in sample:
-        if b.get("name") and b.get("categories"):
-            categories = b.get("categories") or ""
-            if isinstance(categories, list):
-                category = categories[0]
-            else:
-                category = str(categories).split(",")[0].strip()
-            candidates.append({
-                "name": b["name"],
-                "category": category,
-                "price_range": str(b.get("attributes", {}).get("RestaurantsPriceRange2", "medium") or "medium"),
-                "avg_rating": float(b.get("stars", 3.5)),
-                "description": f"{b.get('name')} in {b.get('city', 'the city')}. Categories: {str(b.get('categories', ''))[:100]}"
-            })
-        if len(candidates) >= n:
-            break
+        categories = b.get("categories") or ""
+        category = str(categories).split(",")[0].strip()
+        candidates.append({
+            "name": b["name"],
+            "category": category,
+            "price_range": str(b.get("attributes", {}).get("RestaurantsPriceRange2", "medium") or "medium"),
+            "avg_rating": float(b.get("stars", 3.5)),
+            "description": f"{b.get('name')} in {b.get('city', 'the city')}. Categories: {str(b.get('categories', ''))[:100]}"
+        })
     return candidates
 
 
@@ -136,7 +140,7 @@ def demo_task_a(persona, target_business):
     }
 
     try:
-        r = requests.post(f"{API_BASE}/task-a/simulate-review", json=payload, timeout=30)
+        r = requests.post(f"{API_BASE}/task-a/simulate-review", json=payload, timeout=60)
         if r.status_code == 200:
             result = r.json()
             print(f"  Simulated Rating: {result['simulated_rating']} / 5.0")
