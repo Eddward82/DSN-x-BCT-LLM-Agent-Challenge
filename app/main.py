@@ -11,7 +11,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+def get_client():
+    key = os.environ.get("OPENAI_API_KEY")
+    if not key:
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not set")
+    return OpenAI(api_key=key)
 
 # ─────────────────────────────────────────────
 # SHARED MODELS
@@ -82,6 +86,7 @@ Respond ONLY with a valid JSON object in this exact format:
   "reasoning": "<brief explanation of why you gave this rating and wrote in this style>"
 }}"""
 
+    client = get_client()
     response = client.chat.completions.create(
         model="gpt-4o",
         max_tokens=1024,
@@ -160,6 +165,7 @@ Respond ONLY with a valid JSON object:
   "agent_reasoning": "<overall explanation of your recommendation strategy for this user>"
 }}"""
 
+    client = get_client()
     response = client.chat.completions.create(
         model="gpt-4o",
         max_tokens=2048,
